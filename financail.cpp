@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cmath>
-#include <vector>
 using namespace std;
 
 int main() {
@@ -9,7 +8,7 @@ int main() {
     cin >> choice;
 
     // Case 1–4: Time value of money formulas
-    if (choice == 1 || choice == 2 || choice == 3 || choice == 4) {
+    if (choice >= 1 && choice <= 4) {
         double val, rate; int time;
         cout << "Enter Value (PV or FV or Principal), Rate (%) and Time: ";
         cin >> val >> rate >> time; rate /= 100;
@@ -34,18 +33,19 @@ int main() {
 
     // Case 6: Net Present Value
     else if (choice == 6) {
-        int n; double rate, inv, npv = 0;
+        int n;
+        double rate, inv, npv = 0;
         cout << "Enter number of years: ";
         cin >> n;
         cout << "Enter discount rate (%): ";
         cin >> rate; rate /= 100;
-        vector<double> cf(n);
-        cout << "Enter cash flows for each year: ";
-        for (double &v : cf) cin >> v;
+        double cf[100]; // assuming max 100 years
+        cout << "Enter cash flows for each year:\n";
+        for (int i = 0; i < n; i++) cin >> cf[i];
         cout << "Enter initial investment: ";
         cin >> inv;
         // NPV = Sum[CF / (1 + r)^t] - initial investment
-        for (int i = 0; i < n; ++i) npv += cf[i] / pow(1 + rate, i + 1);
+        for (int i = 0; i < n; i++) npv += cf[i] / pow(1 + rate, i + 1);
         cout << "NPV = " << npv - inv;
     }
 
@@ -72,21 +72,23 @@ int main() {
     // Case 9: Internal Rate of Return (IRR)
     else if (choice == 9) {
         int n;
+        double cf[100]; // assuming max 100 years
         cout << "Enter number of years: ";
         cin >> n;
-        vector<double> cf(n);
-        cout << "Enter cash flows for each year: ";
-        for (double &v : cf) cin >> v;
+        cout << "Enter cash flows for each year:\n";
+        for (int i = 0; i < n; i++) cin >> cf[i];
         double inv, irr = 0.01, step = 0.0001, npv;
         cout << "Enter initial investment: ";
         cin >> inv;
-        // Try values of IRR until NPV ≈ 0
+
+        // Try values of IRR until NPV ˜ 0
         while (irr < 1.0) {
             npv = -inv;
-            for (int i = 0; i < n; ++i) npv += cf[i] / pow(1 + irr, i + 1);
-            if (fabs(npv) < 0.01) break; //fabs = floating point absolute value
+            for (int i = 0; i < n; i++) npv += cf[i] / pow(1 + irr, i + 1);
+            if (fabs(npv) < 0.01) break; // fabs = floating-point absolute value
             irr += step;
         }
+
         if (irr >= 1.0) cout << "IRR not found";
         else {
             double coc;
