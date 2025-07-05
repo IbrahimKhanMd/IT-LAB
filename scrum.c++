@@ -54,9 +54,23 @@ double teamSatisfaction(int a[], int n) {
 }
 
 int main() {
-    int storyPoints[] = {24, 28, 26}, n1 = 3;
-    int cycleTimes[] = {3, 6, 2}, n2 = 3;
-    int ratings[] = {4, 5, 3, 4, 5, 4, 3}, n3 = 7;
+    int n1, storyPoints[100];
+    cout << "Enter number of sprints: ";
+    cin >> n1;
+    cout << "Enter story points for each sprint: ";
+    for (int i = 0; i < n1; i++) cin >> storyPoints[i];
+
+    int n2, cycleTimes[100];
+    cout << "Enter number of completed tasks: ";
+    cin >> n2;
+    cout << "Enter cycle times for each task: ";
+    for (int i = 0; i < n2; i++) cin >> cycleTimes[i];
+
+    int n3, ratings[100];
+    cout << "Enter number of team members: ";
+    cin >> n3;
+    cout << "Enter satisfaction rating of each member (1–5): ";
+    for (int i = 0; i < n3; i++) cin >> ratings[i];
 
     cout << "Velocity: " << velocity(storyPoints, n1) << endl;
     cout << "Avg Velocity: " << avgVelocity(storyPoints, n1) << endl;

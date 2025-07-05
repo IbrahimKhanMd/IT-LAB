@@ -30,26 +30,7 @@ int main() {
         // Discount Rate = rf + rp + ip + lp
         cout << "Discount Rate = " << rf + rp + ip + lp;
     }
-
-    // Case 6: Net Present Value
-    else if (choice == 6) {
-        int n;
-        double rate, inv, npv = 0;
-        cout << "Enter number of years: ";
-        cin >> n;
-        cout << "Enter discount rate (%): ";
-        cin >> rate; rate /= 100;
-        double cf[100]; // assuming max 100 years
-        cout << "Enter cash flows for each year:\n";
-        for (int i = 0; i < n; i++) cin >> cf[i];
-        cout << "Enter initial investment: ";
-        cin >> inv;
-        // NPV = Sum[CF / (1 + r)^t] - initial investment
-        for (int i = 0; i < n; i++) npv += cf[i] / pow(1 + rate, i + 1);
-        cout << "NPV = " << npv - inv;
-    }
-
-    // Case 7: Simple Payback Period
+     // Case 7: Simple Payback Period
     else if (choice == 7) {
         double inv, inflow;
         cout << "Enter initial investment and annual cash inflow: ";
@@ -57,8 +38,7 @@ int main() {
         // Payback = Initial Investment / Annual Cash Flow
         cout << "Payback Period = " << inv / inflow;
     }
-
-    // Case 8: Break-even Analysis
+// Case 8: Break-even Analysis
     else if (choice == 8) {
         double fc, sp, vc;
         cout << "Enter Fixed Cost, Selling Price per unit, Variable Cost per unit: ";
@@ -68,34 +48,63 @@ int main() {
         double units = fc / (sp - vc);
         cout << "Break-even Units = " << units << "\nBreak-even Revenue = " << units * sp;
     }
+    // Case 6: Net Present Value
+    else if (choice == 6) {
+        int n;
+        double rate, inv, npv = 0;
+        cout << "Enter number of years: ";
+        cin >> n;
+        cout << "Enter discount rate (%): ";
+        cin >> rate; rate /= 100;
+        cout << "Enter initial investment: ";
+        cin >> inv;
+        double cf[100]; // assuming max 100 years
+        cout << "Enter cash flows for each year:\n";
+        for (int i = 0; i < n; i++) cin >> cf[i];
+        // NPV = Sum[CF / (1 + r)^t] - initial investment
+        for (int i = 0; i < n; i++) npv += cf[i] / pow(1 + rate, i + 1);
+        cout << "NPV = " << npv - inv;
+    }
 
     // Case 9: Internal Rate of Return (IRR)
-    else if (choice == 9) {
+    else if (choice == 9)
+    {
         int n;
         double cf[100]; // assuming max 100 years
         cout << "Enter number of years: ";
         cin >> n;
-        cout << "Enter cash flows for each year:\n";
-        for (int i = 0; i < n; i++) cin >> cf[i];
         double inv, irr = 0.01, step = 0.0001, npv;
         cout << "Enter initial investment: ";
         cin >> inv;
+        cout << "Enter cash flows for each year:\n";
+        for (int i = 0; i < n; i++)
+            cin >> cf[i];
 
         // Try values of IRR until NPV ˜ 0
-        while (irr < 1.0) {
+        while (irr < 1.0)
+        {
             npv = -inv;
-            for (int i = 0; i < n; i++) npv += cf[i] / pow(1 + irr, i + 1);
-            if (fabs(npv) < 0.01) break; // fabs = floating-point absolute value
+            for (int i = 0; i < n; i++)
+                npv += cf[i] / pow(1 + irr, i + 1);   //npv formula 
+            if (fabs(npv) < 0.01)
+                break; // fabs = floating-point absolute value
             irr += step;
         }
 
-        if (irr >= 1.0) cout << "IRR not found";
-        else {
+        if (irr >= 1.0)
+            cout << "IRR not found";
+        else
+        {
             double coc;
             cout << "Enter Cost of Capital (%): ";
             cin >> coc;
             cout << "IRR: " << irr * 100 << "%\n";
-            cout << (irr * 100 > coc ? "ACCEPT" : (irr * 100 < coc ? "REJECT" : "INDIFFERENT"));
+            if (irr * 100 > coc)
+                cout << "ACCEPT";
+            else if (irr * 100 < coc)
+                cout << "REJECT";
+            else
+                cout << "INDIFFERENT";
         }
     }
 
