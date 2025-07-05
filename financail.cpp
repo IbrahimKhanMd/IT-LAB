@@ -84,7 +84,7 @@ int main() {
         while (irr < 1.0) {
             npv = -inv;
             for (int i = 0; i < n; ++i) npv += cf[i] / pow(1 + irr, i + 1);
-            if (fabs(npv) < 0.01) break;
+            if (fabs(npv) < 0.01) break; //fabs = floating point absolute value
             irr += step;
         }
         if (irr >= 1.0) cout << "IRR not found";
