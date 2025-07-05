@@ -5,15 +5,11 @@ using namespace std;
 int main()
 {
     double PV, EV, AC;
-
     cout << "=== Earned Value Management (EVM) Calculator ===\n\n";
-
     cout << "Enter Planned Value (PV): ";
     cin >> PV;
-
     cout << "Enter Earned Value (EV): ";
     cin >> EV;
-
     cout << "Enter Actual Cost (AC): ";
     cin >> AC;
 
